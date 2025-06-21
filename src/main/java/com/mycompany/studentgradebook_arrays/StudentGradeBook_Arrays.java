@@ -1,6 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
 
 package com.mycompany.studentgradebook_arrays;
 
@@ -20,10 +17,7 @@ public class StudentGradeBook_Arrays {
         String[] emailsArray = new String[MAX_LENGTH];
         double[] yearAveragesArray = new double[MAX_LENGTH];
         String[] studentNumbersArray = new String[MAX_LENGTH];
-        for (int i = 0; i < namesArray.length; i++)
-        {
-          studentNumbersArray[i] = generateStudentNumber();
-        }
+       
         // Assign first 4 values manually in the array (hardcoded)
         namesArray[0] = "Tinky";
         namesArray[1] = "John";
@@ -40,11 +34,15 @@ public class StudentGradeBook_Arrays {
         yearAveragesArray[2] = 68.9;
         yearAveragesArray[3] = 90.0;
 
-        //generate student numbers for every student 
-        int studentCount = 4; // how many students are currently stored
+        //generate student numbers for every student
+        for (int i = 0; i < namesArray.length; i++)
+        {
+          studentNumbersArray[i] = generateStudentNumber();
+        }
         
         boolean userWantsToContinue = true;
-        int countOfElementsInArray = 4;
+        int currentStudentCount = 4;//tracks how many students are currently stored
+
         while(userWantsToContinue == true)
         {
             String choice = JOptionPane.showInputDialog(
@@ -58,21 +56,22 @@ public class StudentGradeBook_Arrays {
         {
             case "1":
 
-                // Ask user how many students to add
-                String input = JOptionPane.showInputDialog("How many new students to add? You can add Max " + (MAX_LENGTH - countOfElementsInArray));
+                // Ask user how many students they want to add
+                String input = JOptionPane.showInputDialog("How many new students to add? You can add Max " + (MAX_LENGTH - currentStudentCount));
                 int newStudents = Integer.parseInt(input);
 
-                for (int i = countOfElementsInArray; i < countOfElementsInArray + newStudents && i < MAX_LENGTH; i++) 
+                //prompt user to enter information for the number of student entered by the user  
+                for (int i = currentStudentCount; i < currentStudentCount + newStudents && i < MAX_LENGTH; i++) 
                 {
-                    namesArray[i] = JOptionPane.showInputDialog("Enter name for student " + (i + 1));
-                    emailsArray[i] = JOptionPane.showInputDialog("Enter email for student #" + (i + 1));
-                    String avgStr = JOptionPane.showInputDialog("Enter year average for student #" + (i + 1));
+                    namesArray[i] = JOptionPane.showInputDialog("Enter name for student" + (i + 1));
+                    emailsArray[i] = JOptionPane.showInputDialog("Enter email for student" + (i + 1));
+                    String avgStr = JOptionPane.showInputDialog("Enter year average for student" + (i + 1));
                     yearAveragesArray[i] = Double.parseDouble(avgStr);
                     studentNumbersArray[i] = generateStudentNumber();
                 }
                 //updates the already existing count of elements in the array with the new count of studnets user entered
                 //keeps track of the length of the array. 
-                countOfElementsInArray += newStudents;
+                currentStudentCount += newStudents;
                 break;
             case "2":
                 //prompt the user to enter name by which they want to search details by
@@ -125,10 +124,13 @@ public class StudentGradeBook_Arrays {
         JOptionPane.showMessageDialog(null, allStudents, "All Students", JOptionPane.INFORMATION_MESSAGE);
     
     }
+    
+    //Method takes in the name the user entered when prompted to, method is also passwed with the populated arrays
     public static void searchByStudentName(String searchedName, String[] name,  String[] studentNumber, String[] emails, double[] yearAverage)
     {
         for (int i = 0; i < name.length; i++)
         {
+            //if the searched name is found in the names array store the index and find the related information for that student by using the index
             if(name[i].equalsIgnoreCase(searchedName))
             {
                 String details = "Name: " + name[i] +
