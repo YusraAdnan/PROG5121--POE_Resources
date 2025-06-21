@@ -1,4 +1,3 @@
-
 package com.mycompany.studentgradebook_arrays;
 
 import javax.swing.JOptionPane;
